@@ -1,4 +1,3 @@
-// npm install express mysql2 sequelize sequelize-cli 
 const express = require('express')
 const routes = require('./routes')
 
@@ -7,6 +6,6 @@ const port = 3000
 
 routes(app)
 
-app.listen(port, () => console.log(`Servidor está rodando na porta ${port}`))
+app.listen(port, () => console.log(`servidor está rodando na porta ${port}`))
 
 module.exports = app
