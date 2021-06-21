@@ -1,3 +1,6 @@
+npx sequelize-cli db:seed:all
+
+
 https://cursos.alura.com.br/course/orm-nodejs-api-sequelize-mysql/task/77026
 
 Rodou o comando de migração antes de fazer alguma alteração importante em algum modelo e agora as tabelas do banco não estão como você precisa? Bom, já comentamos que as migrações em ORM também servem para termos um tipo de “versionamento” (feito através do arquivo SequelizeMeta no seu banco) e poder voltarmos o banco a um estado anterior à última alteração.

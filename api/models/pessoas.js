@@ -1,3 +1,6 @@
+//npx sequelize-cli model:create --name Matriculas --attributes status:string
+// https://sequelize.org/
+
 'use strict';
 const {
   Model
@@ -9,9 +12,17 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+
+    // Associações
     static associate(models) {
-      // define association here
+      Pessoas.hasMany(models.Turmas, {
+          foreignKey: 'docente_id'
+      })
+      Pessoas.hasMany(models.Matriculas, {
+        foreignKey: 'estudante_id'
+      })
     }
+
   };
   Pessoas.init({
     nome: DataTypes.STRING,
