@@ -1,69 +1,67 @@
 const database = require('../models')
 
-class PessoaController {
-  static async pegaPessoasAtivas(req, res){  
+class User {
+  static async findAllUsers(req, res){  
     try {
-      const pessoasAtivas = await pessoasServices.pegaRegistrosAtivos()
-      return res.status(200).json(pessoasAtivas)  
+      const users = await database.Users.findAll()
+      return res.status(200).json(users)  
     } catch (error) {
       return res.status(500).json(error.message)
     }
   }
 
-  static async pegaTodasAsPessoas(req, res){  
-    try {
-      const todasAsPessoas = await pessoasServices.pegaTodosOsRegistros()
-      return res.status(200).json(todasAsPessoas)  
-    } catch (error) {
-      return res.status(500).json(error.message)
-    }
-  }
-
-  static async pegaPessoa(req, res) {  
+  static async findOneUser(req, res) {  
     const { id } = req.params
     try {
-      const pessoa = await pessoasServices.pegaUmRegistro({ id })
-      return res.status(200).json(pessoa)
+      const user = await database.Users.findOne({ id })
+      return res.status(200).json(user)
     } catch (error) {
       return res.status(500).json(error.message)
     }
   }
 
-  static async criaPessoa(req, res) {  
-    const novaPessoa = req.body
+  static async createUser(req, res) {  
+    const bodyData = req.body
     try {
-      const novaPessoaCriada = await pessoasServices.criaRegistro(novaPessoa)
-      return res.status(200).json(novaPessoaCriada)
+      const user = await database.Users.create(bodyData)
+      return res.status(200).json(user)
     } catch (error) {
       return res.status(500).json(error.message)
     }
   }
 
-  static async atualizaPessoa(req, res) {  
+  static async updateUser(req, res) {  
     const { id } = req.params
-    const novasInfos = req.body
+    const bodyData = req.body
     try {
-      await pessoasServices.atualizaRegistro(novasInfos, Number(id))
+      await database.Users.atualizaRegistro(bodyData, Number(id))
       return res.status(200).json({ mensagem: `id ${id} atualizado` })
     } catch (error) {
       return res.status(500).json(error.message)
     }
   }
 
-  static async apagaPessoa(req, res) {  
+  static async deleteUser(req, res) {  
     const { id } = req.params
     try {
-      await pessoasServices.apagaRegistro(Number(id))
+      await database.Users.apagaRegistro(Number(id))
       return res.status(200).json({ mensagem: `id ${id} deletado` })
     } catch (error) {
       return res.status(500).json(error.message)
     }
   }
 
-  static async restauraPessoa(req, res) {  
+  // -------------------------------------------------------------------------------------------
+
+
+
+
+
+
+  static async restaurauser(req, res) {  
     const { id } = req.params
     try {
-      const registroRestaurado = await pessoasServices
+      const registroRestaurado = await database.Users
         .restauraRegistro(Number(id))
       return res.status(200).json(registroRestaurado)
     } catch (error) {
@@ -74,7 +72,7 @@ class PessoaController {
   static async pegaMatriculas(req, res) {  
     const { estudanteId } = req.params
     try {
-      const matriculas = await pessoasServices
+      const matriculas = await database.Users
         .pegaMatriculasPorEstudante({ id: Number(estudanteId) })
       return res.status(200).json(matriculas)
     } catch (error) {
@@ -82,10 +80,10 @@ class PessoaController {
     }
   }
 
-  static async cancelaPessoa(req, res) {  
+  static async cancelauser(req, res) {  
     const { estudanteId } = req.params
     try {
-      await pessoasServices.cancelaPessoaEMatriculas(Number(estudanteId))
+      await database.Users.cancelauserEMatriculas(Number(estudanteId))
       return res
         .status(200)
         .json({message: `matrículas ref. estudante ${estudanteId} canceladas`}) 
@@ -95,4 +93,4 @@ class PessoaController {
   }
 }
 
-module.exports = PessoaController
+module.exports = User
